@@ -14,5 +14,6 @@
       - ca-certificates
       - gnupg
       - lsb-release
+      - sudo
     state: present
   become: true
