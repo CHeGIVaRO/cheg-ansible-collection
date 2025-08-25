@@ -11,7 +11,7 @@ group_vars/*/vault.yml
 host_vars/*/vault.yml
 
 # Collection build artifacts
-*.tar.gz
+cheg-ansible_collection-*.tar.gz
 *.zip
 
 # IDE files

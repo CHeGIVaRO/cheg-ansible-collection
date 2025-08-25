@@ -55,7 +55,7 @@ Single-node PostgreSQL 17 installation and configuration role. Provides database
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/cheg-ansible-collection.git
+git clone https://github.com/CHeGIVaRO/cheg-ansible-collection.git
 cd cheg-ansible-collection
 
 # Install collection locally
@@ -76,7 +76,7 @@ Add to your `requirements.yml`:
 collections:
   - name: cheg.ansible_collection
     version: ">=1.0.0"
-    source: "https://github.com/your-username/cheg-ansible-collection"
+    source: "https://github.com/CHeGIVaRO/cheg-ansible-collection"
 ```
 
 **Note:** Dependencies like `community.postgresql` will be automatically resolved by Ansible Galaxy when installing this collection.

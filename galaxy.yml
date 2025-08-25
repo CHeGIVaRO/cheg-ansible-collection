@@ -11,8 +11,8 @@ tags:
   - system
   - database
   - home
-repository: https://github.com/your-username/cheg-ansible-collection
-documentation: https://github.com/your-username/cheg-ansible-collection
-homepage: https://github.com/your-username/cheg-ansible-collection
-issues: https://github.com/your-username/cheg-ansible-collection/issues
+repository: https://github.com/CHeGIVaRO/cheg-ansible-collection
+documentation: https://github.com/CHeGIVaRO/cheg-ansible-collection
+homepage: https://github.com/CHeGIVaRO/cheg-ansible-collection
+issues: https://github.com/CHeGIVaRO/cheg-ansible-collection/issues
 build_ignore: []
