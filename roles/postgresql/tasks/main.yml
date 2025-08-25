@@ -1,7 +1,11 @@
 ---
 - name: Include OS-specific installation tasks
   include_tasks: "{{ ansible_os_family | lower }}.yml"
-  when: postgresql_install
+  when: postgresql_install and ansible_distribution_version != "24.04"
+
+- name: Include Ubuntu 24.04 specific installation tasks
+  include_tasks: ubuntu_24.yml
+  when: postgresql_install and ansible_distribution_version == "24.04"
 
 - name: Configure PostgreSQL
   include_tasks: configure.yml

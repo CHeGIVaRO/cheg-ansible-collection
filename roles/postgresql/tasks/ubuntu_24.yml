@@ -1,0 +1,39 @@
+---
+# Ubuntu 24.04 specific tasks
+- name: Add PostgreSQL official repository for Ubuntu 24.04
+  apt_repository:
+    repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main"
+    state: present
+    filename: pgdg
+  become: true
+
+- name: Add PostgreSQL GPG key for Ubuntu 24.04
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+  become: true
+
+- name: Update apt cache for Ubuntu 24.04
+  apt:
+    update_cache: yes
+  become: true
+
+- name: Install PostgreSQL server and client for Ubuntu 24.04
+  apt:
+    name:
+      - "postgresql-{{ postgresql_version }}"
+      - "postgresql-client-{{ postgresql_version }}"
+      - "postgresql-contrib-{{ postgresql_version }}"
+      - "python3-psycopg2"
+    state: present
+  become: true
+
+- name: Set PostgreSQL service name for Ubuntu 24.04
+  set_fact:
+    postgresql_service_name: "postgresql"
+
+- name: Install Russian locale for Ubuntu 24.04
+  locale_gen:
+    name: "{{ postgresql_default_locale }}"
+    state: present
+  become: true

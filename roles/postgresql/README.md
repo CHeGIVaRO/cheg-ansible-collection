@@ -16,12 +16,12 @@ This role provides complete PostgreSQL server setup including installation, conf
 - Automated backup configuration with cron jobs
 - Comprehensive logging configuration
 - Firewall configuration
-- Support for Ubuntu/Debian and CentOS/RHEL systems
+- Support for Ubuntu 20.04+, Ubuntu 24.04+, Debian and CentOS/RHEL systems
 
 ## Requirements
 
 - Ansible 2.9+
-- Target systems: Ubuntu 20.04+, CentOS 8+, RHEL 8+
+- Target systems: Ubuntu 20.04+, Ubuntu 24.04+, CentOS 8+, RHEL 8+
 - Python 3.6+ with psycopg2 module
 - community.postgresql collection (>=4.1.0)
 

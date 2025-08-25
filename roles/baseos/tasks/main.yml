@@ -1,6 +1,11 @@
 ---
 - name: Include OS-specific tasks
   include_tasks: "{{ ansible_os_family | lower }}.yml"
+  when: ansible_distribution_version != "24.04"
+
+- name: Include Ubuntu 24.04 specific tasks
+  include_tasks: ubuntu_24.yml
+  when: ansible_distribution_version == "24.04"
 
 - name: Update package cache
   package_facts:

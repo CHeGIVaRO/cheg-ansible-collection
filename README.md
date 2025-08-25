@@ -48,7 +48,7 @@ Single-node PostgreSQL 17 installation and configuration role. Provides database
 
 - Ansible 2.9+
 - Python 3.6+
-- Target systems: Ubuntu 20.04+, CentOS 8+, RHEL 8+
+- Target systems: Ubuntu 20.04+, Ubuntu 24.04+, CentOS 8+, RHEL 8+
 - community.postgresql collection (>=4.1.0)
 
 ## Installation / Установка

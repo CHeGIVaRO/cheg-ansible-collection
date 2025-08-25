@@ -4,7 +4,7 @@
 
 - Ansible 2.9 or higher
 - Python 3.6 or higher
-- Target systems: Ubuntu 20.04+, CentOS 8+, RHEL 8+
+- Target systems: Ubuntu 20.04+, Ubuntu 24.04+, CentOS 8+, RHEL 8+
 - community.postgresql collection 4.1.0 or higher
 
 ## Installation

@@ -18,7 +18,7 @@ This role provides basic system setup including SSH user management, essential p
 ## Requirements
 
 - Ansible 2.9+
-- Target systems: Ubuntu 20.04+, CentOS 8+, RHEL 8+
+- Target systems: Ubuntu 20.04+, Ubuntu 24.04+, CentOS 8+, RHEL 8+
 
 ## Role Variables
 

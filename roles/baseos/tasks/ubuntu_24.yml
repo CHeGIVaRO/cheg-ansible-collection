@@ -1,0 +1,19 @@
+---
+# Ubuntu 24.04 specific tasks
+- name: Update apt cache for Ubuntu 24.04
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  become: true
+  when: baseos_update_cache
+
+- name: Install additional packages for Ubuntu 24.04
+  apt:
+    name:
+      - software-properties-common
+      - apt-transport-https
+      - ca-certificates
+      - gnupg
+      - lsb-release
+    state: present
+  become: true
