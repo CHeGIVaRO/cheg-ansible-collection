@@ -1,0 +1,66 @@
+---
+- name: Install PostgreSQL repository
+  yum:
+    name: "https://download.postgresql.org/pub/repos/yum/reporpms/EL-{{ ansible_distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
+    state: present
+  become: true
+  when: ansible_distribution_major_version | int < 8
+
+- name: Install PostgreSQL repository for RHEL 8+
+  dnf:
+    name: "https://download.postgresql.org/pub/repos/yum/reporpms/EL-{{ ansible_distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
+    state: present
+  become: true
+  when: ansible_distribution_major_version | int >= 8
+
+- name: Disable built-in PostgreSQL module
+  command: "{{ ansible_pkg_mgr }} module disable postgresql"
+  become: true
+  when: ansible_distribution_major_version | int >= 8
+
+- name: Install PostgreSQL server and client
+  yum:
+    name:
+      - "postgresql{{ postgresql_version }}-server"
+      - "postgresql{{ postgresql_version }}"
+      - "postgresql{{ postgresql_version }}-contrib"
+      - "python3-psycopg2"
+    state: present
+  become: true
+  when: ansible_distribution_major_version | int < 8
+
+- name: Install PostgreSQL server and client for RHEL 8+
+  dnf:
+    name:
+      - "postgresql{{ postgresql_version }}-server"
+      - "postgresql{{ postgresql_version }}"
+      - "postgresql{{ postgresql_version }}-contrib"
+      - "python3-psycopg2"
+    state: present
+  become: true
+  when: ansible_distribution_major_version | int >= 8
+
+- name: Initialize PostgreSQL database
+  command: "postgresql{{ postgresql_version }}-setup initdb"
+  become: true
+  args:
+    creates: "{{ postgresql_data_directory | default('/var/lib/pgsql/' + postgresql_version + '/data') }}/postgresql.conf"
+  when: postgresql_data_directory | length == 0
+
+- name: Initialize PostgreSQL database in custom directory
+  command: "initdb -D {{ postgresql_data_directory }}"
+  become: true
+  become_user: postgres
+  args:
+    creates: "{{ postgresql_data_directory }}/postgresql.conf"
+  when: postgresql_data_directory | length > 0
+
+- name: Set PostgreSQL service name for RedHat
+  set_fact:
+    postgresql_service_name: "postgresql-{{ postgresql_version }}"
+
+- name: Install Russian locale for RedHat
+  command: "localedef -i ru_RU -f UTF-8 ru_RU.UTF-8"
+  become: true
+  args:
+    creates: "/usr/lib/locale/{{ postgresql_default_locale }}"

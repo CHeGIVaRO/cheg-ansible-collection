@@ -1,0 +1,5 @@
+---
+# External dependencies for this collection
+collections:
+  - name: community.postgresql
+    version: ">=4.1.0"

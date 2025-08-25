@@ -1,0 +1,62 @@
+---
+- name: Configure PostgreSQL main configuration
+  template:
+    src: postgresql.conf.j2
+    dest: "{{ postgresql_config_path }}/postgresql.conf"
+    backup: yes
+  become: true
+  notify: restart postgresql
+
+- name: Configure PostgreSQL authentication
+  template:
+    src: pg_hba.conf.j2
+    dest: "{{ postgresql_config_path }}/pg_hba.conf"
+    backup: yes
+  become: true
+  notify: restart postgresql
+
+- name: Create custom PostgreSQL data directory
+  file:
+    path: "{{ postgresql_data_directory }}"
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: '0700'
+  become: true
+  when: postgresql_data_directory | length > 0
+
+- name: Create custom PostgreSQL WAL directory
+  file:
+    path: "{{ postgresql_wal_directory }}"
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: '0700'
+  become: true
+  when: postgresql_wal_directory | length > 0
+
+- name: Create PostgreSQL log directory
+  file:
+    path: "{{ postgresql_data_path }}/{{ postgresql_logging.log_directory }}"
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: '0755'
+  become: true
+  when: postgresql_logging.enabled
+
+- name: Configure firewall for PostgreSQL
+  firewalld:
+    port: "{{ postgresql_config.port }}/tcp"
+    permanent: yes
+    state: enabled
+  become: true
+  when: ansible_os_family == "RedHat"
+
+- name: Configure UFW for PostgreSQL
+  ufw:
+    rule: allow
+    port: "{{ postgresql_config.port }}"
+    proto: tcp
+  become: true
+  when: ansible_os_family == "Debian"

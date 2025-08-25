@@ -1,0 +1,12 @@
+---
+- name: Install PostgreSQL extensions
+  postgresql_ext:
+    name: "{{ item }}"
+    db: postgres
+    login_host: localhost
+    login_user: postgres
+    login_password: ""
+    state: present
+  become: true
+  become_user: postgres
+  loop: "{{ postgresql_extensions }}"

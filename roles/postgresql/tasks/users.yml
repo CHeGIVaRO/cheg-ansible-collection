@@ -1,0 +1,33 @@
+---
+- name: Create PostgreSQL users
+  postgresql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    login_host: localhost
+    login_user: postgres
+    login_password: ""
+    priv: "{{ item.privileges | default('') }}"
+    role_attr_flags: "{{ item.role_attr_flags | default('') }}"
+    state: present
+  become: true
+  become_user: postgres
+  loop: "{{ postgresql_users }}"
+  when: item.password is defined
+
+- name: Grant database privileges to users
+  postgresql_privs:
+    db: "{{ item.db }}"
+    login_host: localhost
+    login_user: postgres
+    login_password: ""
+    role: "{{ item.user }}"
+    type: "{{ item.type | default('database') }}"
+    privs: "{{ item.privileges | default('ALL') }}"
+    grant_option: "{{ item.grant_option | default(false) }}"
+    state: present
+  become: true
+  become_user: postgres
+  loop: "{{ postgresql_users }}"
+  when: item.databases is defined
+  vars:
+    item: "{{ {'user': item.name, 'db': item.databases[0], 'type': 'database'} | combine(item) }}"

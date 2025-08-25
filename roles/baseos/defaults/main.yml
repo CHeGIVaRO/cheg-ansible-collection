@@ -1,0 +1,34 @@
+---
+# SSH users to create
+baseos_ssh_users: []
+
+# Packages to install
+baseos_packages:
+  - mc
+  - atop
+  - htop
+  - vim
+  - curl
+  - wget
+  - unzip
+  - tree
+  - git
+
+# Update package cache
+baseos_update_cache: true
+
+# System hardening
+baseos_harden_system: true
+
+# SSH configuration
+baseos_ssh_config:
+  permit_root_login: false
+  password_authentication: false
+  pubkey_authentication: true
+  port: 22
+
+# Timezone
+baseos_timezone: "UTC"
+
+# Locale
+baseos_locale: "en_US.UTF-8"

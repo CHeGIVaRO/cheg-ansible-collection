@@ -1,0 +1,46 @@
+---
+- name: Disable root login via SSH
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin'
+    line: 'PermitRootLogin no'
+  become: true
+  notify: restart ssh
+
+- name: Disable password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+  become: true
+  notify: restart ssh
+
+- name: Enable public key authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PubkeyAuthentication'
+    line: 'PubkeyAuthentication yes'
+  become: true
+  notify: restart ssh
+
+- name: Set SSH port
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?Port'
+    line: 'Port {{ baseos_ssh_config.port }}'
+  become: true
+  notify: restart ssh
+
+- name: Disable firewalld service (iptables will be used instead)
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
+  become: true
+  when: ansible_os_family == "RedHat"
+
+- name: Disable UFW service (iptables will be used instead)
+  ufw:
+    state: disabled
+  become: true
+  when: ansible_os_family == "Debian"

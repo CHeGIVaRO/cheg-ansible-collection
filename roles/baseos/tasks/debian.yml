@@ -1,0 +1,18 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  become: true
+  when: baseos_update_cache
+
+- name: Install additional packages for Debian
+  apt:
+    name:
+      - software-properties-common
+      - apt-transport-https
+      - ca-certificates
+      - gnupg
+      - lsb-release
+    state: present
+  become: true

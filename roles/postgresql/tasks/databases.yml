@@ -1,0 +1,32 @@
+---
+- name: Create PostgreSQL databases
+  postgresql_db:
+    name: "{{ item.name }}"
+    login_host: localhost
+    login_user: postgres
+    login_password: ""
+    owner: "{{ item.owner | default('postgres') }}"
+    encoding: "{{ item.encoding | default(postgresql_default_encoding) }}"
+    template: "{{ item.template | default('template0') }}"
+    lc_collate: "{{ item.lc_collate | default(postgresql_default_locale) }}"
+    lc_ctype: "{{ item.lc_ctype | default(postgresql_default_locale) }}"
+    state: present
+  become: true
+  become_user: postgres
+  loop: "{{ postgresql_databases }}"
+
+- name: Grant privileges on databases
+  postgresql_privs:
+    db: "{{ item.name }}"
+    login_host: localhost
+    login_user: postgres
+    login_password: ""
+    role: "{{ item.owner }}"
+    type: database
+    privs: "{{ item.privileges | default('ALL') }}"
+    grant_option: "{{ item.grant_option | default(false) }}"
+    state: present
+  become: true
+  become_user: postgres
+  loop: "{{ postgresql_databases }}"
+  when: item.owner is defined and item.owner != 'postgres'

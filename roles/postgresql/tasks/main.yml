@@ -1,0 +1,30 @@
+---
+- name: Include OS-specific installation tasks
+  include_tasks: "{{ ansible_os_family | lower }}.yml"
+  when: postgresql_install
+
+- name: Configure PostgreSQL
+  include_tasks: configure.yml
+
+- name: Create PostgreSQL users
+  include_tasks: users.yml
+  when: postgresql_users | length > 0
+
+- name: Create PostgreSQL databases
+  include_tasks: databases.yml
+  when: postgresql_databases | length > 0
+
+- name: Install PostgreSQL extensions
+  include_tasks: extensions.yml
+  when: postgresql_extensions | length > 0
+
+- name: Configure PostgreSQL backup
+  include_tasks: backup.yml
+  when: postgresql_backup.enabled
+
+- name: Ensure PostgreSQL service is running
+  service:
+    name: "{{ postgresql_service_name }}"
+    state: "{{ postgresql_service_state }}"
+    enabled: "{{ postgresql_service_enabled }}"
+  become: true

@@ -1,0 +1,72 @@
+---
+# PostgreSQL version
+postgresql_version: "17"
+
+# PostgreSQL installation
+postgresql_install: true
+postgresql_service_state: started
+postgresql_service_enabled: true
+
+# PostgreSQL data directory configuration
+postgresql_data_directory: ""  # Leave empty for default, or specify custom path like "/var/lib/postgresql/data"
+postgresql_wal_directory: ""   # Leave empty for default, or specify custom path like "/var/lib/postgresql/wal"
+
+# PostgreSQL configuration
+postgresql_config:
+  listen_addresses: "*"
+  port: 5432
+  max_connections: 100
+  shared_buffers: "128MB"
+  effective_cache_size: "256MB"
+  maintenance_work_mem: "64MB"
+  checkpoint_completion_target: 0.9
+  wal_buffers: "4MB"
+  default_statistics_target: 100
+  random_page_cost: 1.1
+  effective_io_concurrency: 200
+  work_mem: "4MB"
+  min_wal_size: "1GB"
+  max_wal_size: "4GB"
+
+# PostgreSQL authentication
+postgresql_auth_method: "md5"
+postgresql_allow_local_connections: true
+postgresql_allow_external_connections: true
+
+# PostgreSQL locale and timezone settings
+postgresql_default_locale: "ru_RU.UTF-8"
+postgresql_default_timezone: "Europe/Moscow"
+postgresql_default_encoding: "UTF8"
+
+# PostgreSQL users
+postgresql_users: []
+
+# PostgreSQL databases
+postgresql_databases: []
+
+# PostgreSQL extensions
+postgresql_extensions: []
+
+# Backup configuration
+postgresql_backup:
+  enabled: false
+  path: "/var/backups/postgresql"
+  retention_days: 7
+  cron_schedule: "0 2 * * *"
+
+# Logging configuration
+postgresql_logging:
+  enabled: true
+  log_destination: "stderr"
+  logging_collector: true
+  log_directory: "log"
+  log_filename: "postgresql-%Y-%m-%d_%H%M%S.log"
+  log_rotation_age: "1d"
+  log_rotation_size: "10MB"
+  log_min_duration_statement: 1000
+  log_checkpoints: true
+  log_connections: true
+  log_disconnections: true
+  log_lock_waits: true
+  log_temp_files: 0
+  log_autovacuum_min_duration: 0

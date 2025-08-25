@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: CHeGIVaRO
+  description: Base operating system configuration role
+  company: 
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: EL
+      versions:
+        - 7
+        - 8
+        - 9
+  galaxy_tags:
+    - system
+    - base
+    - ssh
+    - packages
+
+dependencies: []

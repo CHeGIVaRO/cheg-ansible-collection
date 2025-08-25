@@ -1,0 +1,4 @@
+---
+# PostgreSQL paths for different distributions
+postgresql_config_path: "{{ postgresql_data_directory | default('/etc/postgresql/' + postgresql_version + '/main' if ansible_os_family == 'Debian' else '/var/lib/pgsql/' + postgresql_version + '/data') }}"
+postgresql_data_path: "{{ postgresql_data_directory | default('/var/lib/postgresql/' + postgresql_version + '/main' if ansible_os_family == 'Debian' else '/var/lib/pgsql/' + postgresql_version + '/data') }}"

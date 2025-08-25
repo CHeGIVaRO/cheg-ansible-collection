@@ -1,0 +1,32 @@
+---
+- name: Update yum cache
+  yum:
+    update_cache: yes
+  become: true
+  when: baseos_update_cache
+
+- name: Install EPEL repository
+  yum:
+    name: epel-release
+    state: present
+  become: true
+  when: ansible_distribution_major_version | int < 8
+
+- name: Install additional packages for RedHat
+  yum:
+    name:
+      - yum-utils
+      - epel-release
+      - policycoreutils-python
+    state: present
+  become: true
+  when: ansible_distribution_major_version | int < 8
+
+- name: Install additional packages for RedHat 8+
+  dnf:
+    name:
+      - dnf-utils
+      - policycoreutils-python-utils
+    state: present
+  become: true
+  when: ansible_distribution_major_version | int >= 8

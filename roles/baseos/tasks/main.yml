@@ -1,0 +1,45 @@
+---
+- name: Include OS-specific tasks
+  include_tasks: "{{ ansible_os_family | lower }}.yml"
+
+- name: Update package cache
+  package_facts:
+    manager: auto
+  when: baseos_update_cache
+
+- name: Install base packages
+  package:
+    name: "{{ baseos_packages }}"
+    state: present
+  become: true
+
+- name: Configure timezone
+  timezone:
+    name: "{{ baseos_timezone }}"
+  become: true
+
+- name: Configure locale
+  locale_gen:
+    name: "{{ baseos_locale }}"
+    state: present
+  become: true
+
+- name: Set system locale
+  lineinfile:
+    path: /etc/default/locale
+    regexp: '^LANG='
+    line: 'LANG={{ baseos_locale }}'
+    create: yes
+  become: true
+
+- name: Create SSH users
+  include_tasks: users.yml
+  when: baseos_ssh_users | length > 0
+
+- name: Configure SSH
+  include_tasks: ssh.yml
+  when: baseos_harden_system
+
+- name: System hardening
+  include_tasks: hardening.yml
+  when: baseos_harden_system
