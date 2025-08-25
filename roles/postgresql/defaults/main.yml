@@ -33,6 +33,10 @@ postgresql_auth_method: "md5"
 postgresql_allow_local_connections: true
 postgresql_allow_external_connections: true
 
+# PostgreSQL admin user configuration
+postgresql_admin_user: "postgres"
+postgresql_admin_password: ""  # Leave empty for Unix socket authentication, or set password for remote access
+
 # PostgreSQL locale and timezone settings
 postgresql_default_locale: "ru_RU.UTF-8"
 postgresql_default_timezone: "Europe/Moscow"

@@ -9,7 +9,12 @@ BACKUP_FILE="postgresql_backup_${DATE}.sql"
 
 # Create backup
 echo "$(date): Starting PostgreSQL backup..." >> "${BACKUP_DIR}/backup.log"
-pg_dumpall -h localhost -U postgres > "${BACKUP_DIR}/${BACKUP_FILE}"
+{% if postgresql_admin_password | length > 0 %}
+export PGPASSWORD="{{ postgresql_admin_password }}"
+pg_dumpall -h localhost -U {{ postgresql_admin_user }} > "${BACKUP_DIR}/${BACKUP_FILE}"
+{% else %}
+pg_dumpall -h localhost -U {{ postgresql_admin_user }} > "${BACKUP_DIR}/${BACKUP_FILE}"
+{% endif %}
 
 if [ $? -eq 0 ]; then
     # Compress backup

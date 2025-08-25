@@ -3,8 +3,8 @@
   file:
     path: "{{ postgresql_backup.path }}"
     state: directory
-    owner: postgres
-    group: postgres
+    owner: "{{ postgresql_admin_user }}"
+    group: "{{ postgresql_admin_user }}"
     mode: '0755'
   become: true
 
@@ -12,15 +12,15 @@
   template:
     src: backup.sh.j2
     dest: "{{ postgresql_backup.path }}/backup.sh"
-    owner: postgres
-    group: postgres
+    owner: "{{ postgresql_admin_user }}"
+    group: "{{ postgresql_admin_user }}"
     mode: '0755'
   become: true
 
 - name: Add backup and cleanup cron job
   cron:
     name: "PostgreSQL backup and cleanup"
-    user: postgres
+    user: "{{ postgresql_admin_user }}"
     minute: "{{ postgresql_backup.cron_schedule.split()[0] }}"
     hour: "{{ postgresql_backup.cron_schedule.split()[1] }}"
     day: "{{ postgresql_backup.cron_schedule.split()[2] }}"

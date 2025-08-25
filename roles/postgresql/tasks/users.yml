@@ -4,13 +4,13 @@
     name: "{{ item.name }}"
     password: "{{ item.password }}"
     login_host: localhost
-    login_user: postgres
-    login_password: ""
+    login_user: "{{ postgresql_admin_user }}"
+    login_password: "{{ postgresql_admin_password | default('') }}"
     priv: "{{ item.privileges | default('') }}"
     role_attr_flags: "{{ item.role_attr_flags | default('') }}"
     state: present
   become: true
-  become_user: postgres
+  become_user: "{{ postgresql_admin_user }}"
   loop: "{{ postgresql_users }}"
   when: item.password is defined
 
@@ -18,15 +18,15 @@
   postgresql_privs:
     db: "{{ item.db }}"
     login_host: localhost
-    login_user: postgres
-    login_password: ""
+    login_user: "{{ postgresql_admin_user }}"
+    login_password: "{{ postgresql_admin_password | default('') }}"
     role: "{{ item.user }}"
     type: "{{ item.type | default('database') }}"
     privs: "{{ item.privileges | default('ALL') }}"
     grant_option: "{{ item.grant_option | default(false) }}"
     state: present
   become: true
-  become_user: postgres
+  become_user: "{{ postgresql_admin_user }}"
   loop: "{{ postgresql_users }}"
   when: item.databases is defined
   vars:

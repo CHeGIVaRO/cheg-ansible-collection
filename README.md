@@ -144,6 +144,10 @@ baseos_packages:
 # PostgreSQL version
 postgresql_version: "17"
 
+# PostgreSQL admin configuration (optional)
+postgresql_admin_user: "postgres"
+postgresql_admin_password: "{{ vault_postgres_admin_password }}"  # Optional, for remote access
+
 # PostgreSQL data directories (optional)
 postgresql_data_directory: "/var/lib/postgresql/data"
 postgresql_wal_directory: "/var/lib/postgresql/wal"

@@ -4,9 +4,9 @@
     name: "{{ item }}"
     db: postgres
     login_host: localhost
-    login_user: postgres
-    login_password: ""
+    login_user: "{{ postgresql_admin_user }}"
+    login_password: "{{ postgresql_admin_password | default('') }}"
     state: present
   become: true
-  become_user: postgres
+  become_user: "{{ postgresql_admin_user }}"
   loop: "{{ postgresql_extensions }}"

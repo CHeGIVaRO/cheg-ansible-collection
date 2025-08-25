@@ -113,6 +113,12 @@ Custom data directory for PostgreSQL (optional). If not specified, uses default 
 ### postgresql_wal_directory
 Custom WAL directory for PostgreSQL (optional). If not specified, uses default system path.
 
+### postgresql_admin_user
+PostgreSQL admin user (default: "postgres")
+
+### postgresql_admin_password
+PostgreSQL admin password (optional). If not specified, uses Unix socket authentication.
+
 ### postgresql_backup
 Backup configuration:
 - `enabled`: Enable automated backups (default: false)

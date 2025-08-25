@@ -19,8 +19,8 @@
   file:
     path: "{{ postgresql_data_directory }}"
     state: directory
-    owner: postgres
-    group: postgres
+    owner: "{{ postgresql_admin_user }}"
+    group: "{{ postgresql_admin_user }}"
     mode: '0700'
   become: true
   when: postgresql_data_directory | length > 0
@@ -29,8 +29,8 @@
   file:
     path: "{{ postgresql_wal_directory }}"
     state: directory
-    owner: postgres
-    group: postgres
+    owner: "{{ postgresql_admin_user }}"
+    group: "{{ postgresql_admin_user }}"
     mode: '0700'
   become: true
   when: postgresql_wal_directory | length > 0
@@ -39,11 +39,23 @@
   file:
     path: "{{ postgresql_data_path }}/{{ postgresql_logging.log_directory }}"
     state: directory
-    owner: postgres
-    group: postgres
+    owner: "{{ postgresql_admin_user }}"
+    group: "{{ postgresql_admin_user }}"
     mode: '0755'
   become: true
   when: postgresql_logging.enabled
+
+- name: Set PostgreSQL admin password
+  postgresql_user:
+    name: "{{ postgresql_admin_user }}"
+    password: "{{ postgresql_admin_password }}"
+    login_host: localhost
+    login_user: "{{ postgresql_admin_user }}"
+    login_password: ""
+    state: present
+  become: true
+  become_user: "{{ postgresql_admin_user }}"
+  when: postgresql_admin_password | length > 0
 
 - name: Configure firewall for PostgreSQL
   firewalld:
