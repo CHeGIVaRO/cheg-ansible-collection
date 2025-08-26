@@ -46,7 +46,7 @@
   when: postgresql_logging.enabled
 
 - name: Set PostgreSQL admin password
-  postgresql_user:
+  community.postgresql.postgresql_user:
     name: "{{ postgresql_admin_user }}"
     password: "{{ postgresql_admin_password }}"
     login_host: localhost

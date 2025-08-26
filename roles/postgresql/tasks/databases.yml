@@ -1,6 +1,6 @@
 ---
 - name: Create PostgreSQL databases
-  postgresql_db:
+  community.postgresql.postgresql_db:
     name: "{{ item.name }}"
     login_host: localhost
     login_user: "{{ postgresql_admin_user }}"
@@ -16,7 +16,7 @@
   loop: "{{ postgresql_databases }}"
 
 - name: Grant privileges on databases
-  postgresql_privs:
+  community.postgresql.postgresql_privs:
     db: "{{ item.name }}"
     login_host: localhost
     login_user: "{{ postgresql_admin_user }}"

@@ -24,7 +24,11 @@
 ## Установка зависимостей
 
 ```bash
+# Установка внешних зависимостей
 ansible-galaxy collection install -r requirements.yml
+
+# Установка локальных ролей
+ansible-galaxy role install -r requirements.yml
 ```
 
 ## Использование
@@ -36,8 +40,8 @@ ansible-galaxy collection install -r requirements.yml
   become: true
   
   roles:
-    - baseos
-    - postgresql
+    - cheg.baseos
+    - cheg.postgresql
 ```
 
 ## Переменные

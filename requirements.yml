@@ -3,3 +3,10 @@
 collections:
   - name: community.postgresql
     version: ">=4.1.0"
+
+# Local roles
+roles:
+  - name: cheg.baseos
+    src: ./roles/baseos
+  - name: cheg.postgresql
+    src: ./roles/postgresql

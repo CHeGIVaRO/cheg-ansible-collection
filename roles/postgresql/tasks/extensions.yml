@@ -1,6 +1,6 @@
 ---
 - name: Install PostgreSQL extensions
-  postgresql_ext:
+  community.postgresql.postgresql_ext:
     name: "{{ item }}"
     db: postgres
     login_host: localhost
