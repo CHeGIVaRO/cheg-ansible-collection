@@ -1,0 +1,14 @@
+namespace: chegivaro
+name: ansible_collection
+version: 1.0.0
+readme: README.md
+authors:
+  - CHeGIVaRO
+description: Ansible Collection with roles for home infrastructure
+license:
+  - MIT
+tags:
+  - system
+  - database
+  - home
+repository: https://github.com/CHeGIVaRO/
